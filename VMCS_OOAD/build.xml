@@ -31,8 +31,10 @@
       <test name="sg.edu.nus.iss.vmcs.store.AllTests"/>
       <classpath>
         <pathelement location="classes"/>
+        <pathelement location="jars/junit.jar"/>
       </classpath>
     </junit>
   </target>
   <target name="build" depends="clean,init,compile,docs"></target>
+  <target name="unittest" depends="clean,init,compile,test"></target>
 </project>
