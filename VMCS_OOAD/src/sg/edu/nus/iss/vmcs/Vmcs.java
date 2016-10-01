@@ -46,7 +46,7 @@ public class Vmcs {
 	 * @param args the arguments for the main application.
 	 */
 	public static void main(String args[]) {
-		Vmcs vmcs = new Vmcs("");
+		Vmcs vmcs = new Vmcs(args[0]);
 		vmcs.start();
 	}
 }//End of class Vmcs
