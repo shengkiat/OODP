@@ -11,8 +11,25 @@ import junit.framework.TestSuite;
  * @author Team SE16T5E
  *
  */
+
+import org.junit.runner.RunWith;
+import org.junit.runners.Suite;
+
+@RunWith(Suite.class)
+
+@Suite.SuiteClasses({
+	CashStoreItemTest.class,
+	CashStoreTest.class,
+	CoinTest.class,
+	DrinksBrandTest.class,
+	DrinksStoreItemTest.class,
+	DrinksStoreTest.class,
+	StoreControllerTest.class,
+	StoreItemTest.class,
+	StoreObjectTest.class
+})
 public class AllTests {
-	public static TestSuite suite() throws Exception {
+	/*public static TestSuite suite() throws Exception {
 		  TestSuite suite=new TestSuite("Store Tests");
 		  suite.addTestSuite(CashStoreItemTest.class);
 		  suite.addTestSuite(CashStoreTest.class);
@@ -24,5 +41,5 @@ public class AllTests {
 		  suite.addTestSuite(StoreItemTest.class);
 		  suite.addTestSuite(StoreObjectTest.class);
 		  return suite;
-	}
+	}*/
 }//End of class AllTests
