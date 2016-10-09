@@ -20,7 +20,7 @@ import sg.edu.nus.iss.vmcs.util.VMCSException;
  * @author Team SE16T5E
  * @version 1.0 2008-10-01
  */
-public class CoinReceiver {
+public class CoinReceiver implements PaymentReceiver{
 	private TransactionController txCtrl;
 	
 	/**List of the Coins entered during the transaction.*/
@@ -72,7 +72,7 @@ public class CoinReceiver {
 	 * </ol>
 	 * @param weight the weight of the coin received&#46;
 	 */
-	public void receiveCoin(double weight){
+	public void receiveCash(double weight){
 		CashStore cashStore=(CashStore)txCtrl.getMainController().getStoreController().getStore(Store.CASH);
 		Coin coin=cashStore.findCoin(weight);
 		if(coin==null){

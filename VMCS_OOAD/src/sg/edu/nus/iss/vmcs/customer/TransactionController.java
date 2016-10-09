@@ -34,7 +34,7 @@ public class TransactionController {
 	private CustomerPanel custPanel;
 	private DispenseController dispenseCtrl;
 	private ChangeGiver changeGiver;
-	private CoinReceiver coinReceiver;
+	private PaymentReceiver coinReceiver;
 
 	/**Set to TRUE when change is successfully issued during the transaction.*/
 	private boolean changeGiven=false;
@@ -52,7 +52,11 @@ public class TransactionController {
 	public TransactionController(MainController mainCtrl) {
 		this.mainCtrl = mainCtrl;
 		dispenseCtrl=new DispenseController(this);
-		coinReceiver=new CoinReceiver(this);
+		
+		coinReceiver = PaymentReceiverFactory.getInstance().getReceiver("coin", this);
+		
+		
+		//coinReceiver=new CoinReceiver(this);
 		changeGiver=new ChangeGiver(this);
 	}
 
@@ -325,7 +329,7 @@ public class TransactionController {
 	 * This method returns the CoinReceiver.
 	 * @return the CoinReceiver.
 	 */
-	public CoinReceiver getCoinReceiver(){
+	public PaymentReceiver getCoinReceiver(){
 		return coinReceiver;
 	}
 	
