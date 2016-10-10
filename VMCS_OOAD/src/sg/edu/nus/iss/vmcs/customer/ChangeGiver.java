@@ -8,7 +8,6 @@
 package sg.edu.nus.iss.vmcs.customer;
 
 import sg.edu.nus.iss.vmcs.store.CashStoreItem;
-import sg.edu.nus.iss.vmcs.store.Coin;
 import sg.edu.nus.iss.vmcs.store.Store;
 import sg.edu.nus.iss.vmcs.store.StoreController;
 import sg.edu.nus.iss.vmcs.store.StoreItem;
@@ -21,14 +20,29 @@ import sg.edu.nus.iss.vmcs.util.VMCSException;
  * @version 1.0 2008-10-01
  */
 public class ChangeGiver {
-	private TransactionController txCtrl; 
+	private TransactionController txCtrl;
+	private ChangeGiverHandler chainOfResponsibilityOne;
 
 	/**
 	 * The constructor creates an instance of the object.
+	 * It will initialise the ChangeGiverHandler handlers
 	 * @param txCtrl the TransactionController
 	 */
 	public ChangeGiver(TransactionController txCtrl){
 		this.txCtrl=txCtrl;
+		
+		// initialize the chain
+		this.chainOfResponsibilityOne = new CurrencyOneDollerChangeGiverHandler();
+		ChangeGiverHandler chainOfResponsibilityTwo = new CurrencyFiftyCentsChangeGiverHandler();
+		ChangeGiverHandler chainOfResponsibilityThree = new CurrencyTwentyCentsChangeGiverHandler();
+		ChangeGiverHandler chainOfResponsibilityFour = new CurrencyTenCentsChangeGiverHandler();
+		ChangeGiverHandler chainOfResponsibilityFive = new CurrencyFiveCentsChangeGiverHandler();
+
+		// set the chain of responsibility
+		chainOfResponsibilityOne.setNextChain(chainOfResponsibilityTwo);
+		chainOfResponsibilityTwo.setNextChain(chainOfResponsibilityThree);
+		chainOfResponsibilityThree.setNextChain(chainOfResponsibilityFour);
+		chainOfResponsibilityFour.setNextChain(chainOfResponsibilityFive);
 	}
 	
 	/**
@@ -52,25 +66,8 @@ public class ChangeGiver {
 			return true;
 		try{
 			int changeBal=changeRequired;
-			MainController mainCtrl=txCtrl.getMainController();
-			StoreController storeCtrl=mainCtrl.getStoreController();
-			int cashStoreSize=storeCtrl.getStoreSize(Store.CASH); 
-			for(int i=cashStoreSize-1;i>=0;i--){
-				StoreItem cashStoreItem=storeCtrl.getStore(Store.CASH).getStoreItem(i);
-				int quantity=cashStoreItem.getQuantity();
-				Coin coin=(Coin)cashStoreItem.getContent();
-				int value=coin.getValue();
-				int quantityRequired=0;
-				while(changeBal>0&&changeBal>=value&&quantity>0){
-					changeBal-=value;
-					quantityRequired++;
-					quantity--;
-				}
-				txCtrl.getMainController().getMachineryController().giveChange(i,quantityRequired);
-			}
-			txCtrl.getCustomerPanel().setChange(changeRequired-changeBal);
-			if(changeBal>0)
-				txCtrl.getCustomerPanel().displayChangeStatus(true);
+			// start chain of responsibility for returning change for customer
+			chainOfResponsibilityOne.giveChange(changeBal, txCtrl);
 		}
 		catch(VMCSException ex){
 			txCtrl.terminateFault();
