@@ -24,7 +24,7 @@ package sg.edu.nus.iss.vmcs.store;
  * @version 3.0 5/07/2003
  * @author Olivo Miotto, Pang Ping Li
  */
-public class DrinksBrand extends StoreObject {
+public class DrinksBrand extends StoreObject implements DrinksProduct {
 	private int price;
 
 	/**
@@ -57,5 +57,10 @@ public class DrinksBrand extends StoreObject {
 	 */
 	public int getPrice() {
 		return (price);
+	}
+
+	@Override
+	public String getType() {
+		return name;
 	}
 }//End of class DrinksBrand
