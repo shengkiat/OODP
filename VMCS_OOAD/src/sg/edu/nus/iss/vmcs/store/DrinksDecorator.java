@@ -16,5 +16,10 @@ public abstract class DrinksDecorator implements DrinksProduct {
 	public int getPrice() {
 		return drinksProduct.getPrice();
 	}
+	
+	@Override
+	public String getType() {
+		return drinksProduct.getType();
+	}
 
 }
