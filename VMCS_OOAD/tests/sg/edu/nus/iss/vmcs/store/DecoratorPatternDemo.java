@@ -8,6 +8,9 @@ public class DecoratorPatternDemo {
 		
 		DrinksProduct coffeeWithLessSugar = new LessSugarDecorator(coffee);
 		System.out.println(coffeeWithLessSugar.getType() + ": " + coffeeWithLessSugar.getPrice());
+		
+		DrinksProduct coffeeWithLessSugarLessMilk = new LessMilkDecorator(coffeeWithLessSugar);
+		System.out.println(coffeeWithLessSugarLessMilk.getType() + ": " + coffeeWithLessSugarLessMilk.getPrice());
 	}
 
 }
