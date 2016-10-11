@@ -11,6 +11,7 @@ public class DecoratorPatternDemo {
 		
 		DrinksProduct coffeeWithLessSugarLessMilk = new LessMilkDecorator(coffeeWithLessSugar);
 		System.out.println(coffeeWithLessSugarLessMilk.getType() + ": " + coffeeWithLessSugarLessMilk.getPrice());
+		
 	}
 
 }
