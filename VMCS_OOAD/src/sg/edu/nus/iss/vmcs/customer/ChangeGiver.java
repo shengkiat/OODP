@@ -7,6 +7,7 @@
  */
 package sg.edu.nus.iss.vmcs.customer;
 
+import sg.edu.nus.iss.vmcs.store.CashStoreController;
 import sg.edu.nus.iss.vmcs.store.CashStoreItem;
 import sg.edu.nus.iss.vmcs.store.Store;
 import sg.edu.nus.iss.vmcs.store.StoreController;
@@ -86,8 +87,8 @@ public class ChangeGiver {
 			return;
 		boolean isAnyDenoEmpty=false;
 		MainController mainCtrl=txCtrl.getMainController();
-		StoreController storeCtrl=mainCtrl.getStoreController();
-		StoreItem[] cashStoreItems=storeCtrl.getStore(Store.CASH).getItems();
+		CashStoreController storeCtrl=mainCtrl.getCashStoreController();
+		StoreItem[] cashStoreItems=storeCtrl.getStore().getItems();
 		for(int i=0;i<cashStoreItems.length;i++){
 			StoreItem storeItem=cashStoreItems[i];
 			CashStoreItem cashStoreItem=(CashStoreItem)storeItem;

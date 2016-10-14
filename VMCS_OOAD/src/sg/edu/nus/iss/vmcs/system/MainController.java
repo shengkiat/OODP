@@ -12,6 +12,8 @@ import java.io.IOException;
 import sg.edu.nus.iss.vmcs.customer.TransactionController;
 import sg.edu.nus.iss.vmcs.machinery.MachineryController;
 import sg.edu.nus.iss.vmcs.maintenance.MaintenanceController;
+import sg.edu.nus.iss.vmcs.store.CashStoreController;
+import sg.edu.nus.iss.vmcs.store.DrinkStoreController;
 import sg.edu.nus.iss.vmcs.store.StoreController;
 import sg.edu.nus.iss.vmcs.util.VMCSException;
 
@@ -26,7 +28,8 @@ public class MainController {
 	private MachineryController   machineryCtrl;
 	private MaintenanceController maintenanceCtrl;
 	private TransactionController txCtrl;
-	private StoreController       storeCtrl;
+	private CashStoreController       cashStoreCtrl;
+	private DrinkStoreController drinkStoreCtrl;
 
 	private String      propertyFile;
 
@@ -67,8 +70,11 @@ public class MainController {
 				new DrinkPropertyLoader(Environment.getDrinkPropFile());
 			cashLoader.initialize();
 			drinksLoader.initialize();
-			storeCtrl = new StoreController(cashLoader, drinksLoader);
-			storeCtrl.initialize();
+		//	storeCtrl = new StoreController(cashLoader, drinksLoader);
+			cashStoreCtrl = new CashStoreController(cashLoader);
+			drinkStoreCtrl = new DrinkStoreController(drinksLoader);
+			cashStoreCtrl.initialize();
+			drinkStoreCtrl.initialize();
 			simulatorCtrl = new SimulationController(this);
 			machineryCtrl = new MachineryController(this);
 			machineryCtrl.initialize();
@@ -101,8 +107,15 @@ public class MainController {
 	 * This method returns the StoreController.
 	 * @return the StoreController.
 	 */
-	public StoreController getStoreController() {
-		return storeCtrl;
+	public CashStoreController getCashStoreController() {
+		return cashStoreCtrl;
+	}
+	/**
+	 * This method returns the StoreController.
+	 * @return the StoreController.
+	 */
+	public DrinkStoreController getDrinkStoreController() {
+		return drinkStoreCtrl;
 	}
 
 	/**
@@ -138,7 +151,8 @@ public class MainController {
 	 */
 	public void closeDown() {
 		try {
-			storeCtrl.closeDown();
+			cashStoreCtrl.closeDown();
+			drinkStoreCtrl.closeDown();
 		} catch (Exception e) {
 			System.out.println("Error closing down the stores: " + e);
 		}

@@ -24,7 +24,7 @@ import sg.edu.nus.iss.vmcs.util.*;
 public class DrinkDisplay extends Panel {
 	public final static String TITLE = "Quantity of Drinks Available";
 
-	private StoreController storeCtrl;
+	private DrinkStoreController storeCtrl;
 	private MaintenanceController mCtrl;
 	private ButtonItemDisplay bi;
 	private LabelledDisplay price;
@@ -36,12 +36,12 @@ public class DrinkDisplay extends Panel {
 	 */
 	public DrinkDisplay(MaintenanceController mctrl) {
 		mCtrl = mctrl;
-		storeCtrl = mCtrl.getMainController().getStoreController();
+		storeCtrl = mCtrl.getMainController().getDrinkStoreController();
 
 		this.setLayout(new BorderLayout());
 		int len;
-		len = storeCtrl.getStoreSize(Store.DRINK);
-		StoreItem[] items = storeCtrl.getStoreItems(Store.DRINK);
+		len = storeCtrl.getStoreSize();
+		StoreItem[] items = storeCtrl.getStoreItems();
 
 		bi = new ButtonItemDisplay(TITLE, items, len);
 

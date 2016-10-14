@@ -13,6 +13,7 @@ import java.awt.Insets;
 import java.awt.Panel;
 
 import sg.edu.nus.iss.vmcs.store.CashStore;
+import sg.edu.nus.iss.vmcs.store.CashStoreController;
 import sg.edu.nus.iss.vmcs.store.CashStoreItem;
 import sg.edu.nus.iss.vmcs.store.Coin;
 import sg.edu.nus.iss.vmcs.store.Store;
@@ -39,9 +40,9 @@ public class CoinInputBox extends Panel{
 	public CoinInputBox(TransactionController cctrl){
 		this.txCtrl=cctrl;
 		MainController mainCtrl=cctrl.getMainController();
-		StoreController storeCtrl=mainCtrl.getStoreController();
-		int cashStoreSize=storeCtrl.getStoreSize(Store.CASH);
-		StoreItem[] cashStoreItems=storeCtrl.getStore(Store.CASH).getItems();
+		CashStoreController storeCtrl=mainCtrl.getCashStoreController();
+		int cashStoreSize=storeCtrl.getStoreSize();
+		StoreItem[] cashStoreItems=storeCtrl.getStore().getItems();
 		
 		btnCoinButton=new CoinButton[cashStoreSize+1];
 		CoinInputListener coinInputListener=new CoinInputListener(txCtrl.getCoinReceiver());

@@ -24,7 +24,7 @@ import sg.edu.nus.iss.vmcs.util.VMCSException;
 public class CoinDisplay extends Panel {
 	public final static String TITLE = "Quantity of Coins Available";
 
-	private StoreController storeCtrl;
+	private CashStoreController storeCtrl;
 	private MaintenanceController mCtrl;
 	private ButtonItemDisplay bi;
 	private int len;
@@ -36,10 +36,10 @@ public class CoinDisplay extends Panel {
 	 */
 	public CoinDisplay(MaintenanceController mctrl) {
 		mCtrl = mctrl;
-		storeCtrl = mCtrl.getMainController().getStoreController();
+		storeCtrl = mCtrl.getMainController().getCashStoreController();
 
-		len = storeCtrl.getStoreSize(Store.CASH);
-		StoreItem[] items = storeCtrl.getStoreItems(Store.CASH);
+		len = storeCtrl.getStoreSize();
+		StoreItem[] items = storeCtrl.getStoreItems();
 
 		bi = new ButtonItemDisplay(TITLE, items, len);
 

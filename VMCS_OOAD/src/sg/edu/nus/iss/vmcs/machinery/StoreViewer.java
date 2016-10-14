@@ -53,10 +53,10 @@ public class StoreViewer extends Panel {
 		Panel pl = new Panel(new FlowLayout(FlowLayout.LEFT));
 		pl.add(new Label(title));
 
-		int sSize = storeCtrl.getStoreSize(type);
+		int sSize = storeCtrl.getStoreSize();
 		viewItems = new LabelledDisplay[sSize];
 
-		StoreItem[] storeItem = storeCtrl.getStoreItems(type);
+		StoreItem[] storeItem = storeCtrl.getStoreItems();
 		this.setLayout(new GridLayout(0, 1));
 		this.add(pl);
 
@@ -77,7 +77,7 @@ public class StoreViewer extends Panel {
 	 * Update the display fields with the data provided.
 	 */
 	public void update () {
-		StoreItem[] storeItem = storeCtrl.getStoreItems(type);
+		StoreItem[] storeItem = storeCtrl.getStoreItems();
 		for (int i = 0; i < storeItem.length; i++) {
 			int val = storeItem[i].getQuantity();
 			String sval = String.valueOf(val);
@@ -92,7 +92,7 @@ public class StoreViewer extends Panel {
 	 * @throws VMCSException if fail index is greater or equal to store size.
 	 */
 	public void update(int idx, int qty) throws VMCSException {
-		int sSize = storeCtrl.getStoreSize(type);
+		int sSize = storeCtrl.getStoreSize();
 		if (idx >= sSize)
 			throw new VMCSException("StoreViewer.update", "index overflow");
 		viewItems[idx].setValue(qty);

@@ -20,8 +20,6 @@ import sg.edu.nus.iss.vmcs.store.*;
 public class MachineryController {
 	/**This attribute reference to the MainController*/
 	public MainController mainCtrl;
-	/**This attribute reference to the StoreController*/
-	public StoreController storeCtrl;
 
 	private MachinerySimulatorPanel ml;
 	private Door door;
@@ -32,7 +30,6 @@ public class MachineryController {
 	 */
 	public MachineryController(MainController mctrl) {
 		mainCtrl = mctrl;
-		storeCtrl = mctrl.getStoreController();
 	}
 
 	/**
@@ -163,7 +160,7 @@ public class MachineryController {
 	 * @throws VMCSException if fail to update cash store display.
 	 */
 	public void storeCoin(Coin c) throws VMCSException {
-		storeCtrl.storeCoin(c);
+		mainCtrl.getCashStoreController().storeCoin(c);
 		if (ml != null)
 			ml.getCashStoreDisplay().update();
 	}
@@ -176,7 +173,7 @@ public class MachineryController {
 	 * @throws VMCSException if fail to update cash store display.
 	 */
 	public void dispenseDrink(int idx) throws VMCSException {
-		storeCtrl.dispenseDrink(idx);
+		mainCtrl.getDrinkStoreController().dispenseDrink(idx);
 		if (ml != null)
 			ml.getCashStoreDisplay().update();
 
@@ -191,7 +188,7 @@ public class MachineryController {
 	 * @throws VMCSException if fail to update cash store display.
 	 */
 	public void giveChange(int idx, int numOfCoins) throws VMCSException {
-		storeCtrl.giveChange(idx, numOfCoins);
+		mainCtrl.getCashStoreController().giveChange(idx, numOfCoins);
 		if (ml != null)
 			ml.getCashStoreDisplay().update();
 	}
