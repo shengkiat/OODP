@@ -8,6 +8,8 @@
 package sg.edu.nus.iss.vmcs.system;
 
 
+import java.io.IOException;
+
 import sg.edu.nus.iss.vmcs.store.*;
 
 /**
@@ -17,8 +19,10 @@ import sg.edu.nus.iss.vmcs.store.*;
  * @author Olivo Miotto, Pang Ping Li
  */
 
-public class DrinkPropertyLoader extends FilePropertyLoader {
+public class DrinkPropertyLoader extends PropertyLoader {
 
+	private String environmentStr = null;
+	
 	private static final String NAME_LABEL     = "Name";
 	private static final String PRICE_LABEL    = "Price";
 	private static final String QUANTITY_LABEL = "Quantity";
@@ -27,54 +31,109 @@ public class DrinkPropertyLoader extends FilePropertyLoader {
 	 * This constructor creates an instance of the DrinkPropertyLoader object.
 	 * @param filen the file name of the drink property file.
 	 */
-	public DrinkPropertyLoader(String filen) {
-		super(filen);
+	public DrinkPropertyLoader(String environmentStr) {
+		super();
+		
+		this.environmentStr = environmentStr;
+	}
+	
+public void setLoaderType(LoaderType loaderType) {
+		
+		switch (loaderType){
+		
+			case FILE_LOADER:
+				//drinkPropFile = environmentStr
+				setPropertyLoaderImpl(new FilePropertyLoaderImpl(environmentStr) {
+					
+					/**
+					 * This method updates the hash table with the data from the DrinkStoreItem.
+					 * @param index the index of the store item.
+					 * @param drinksItem the store item of the given index.
+					 */
+					@Override
+					public void setItem(int index, StoreItem drinksItem) {
+						int idx = index + 1;
+
+						DrinksStoreItem item = (DrinksStoreItem) drinksItem;
+						DrinksBrand brand = (DrinksBrand) item.getContent();
+						String itn = new String(NAME_LABEL + idx);
+						setValue(itn, brand.getName());
+
+						itn = new String(PRICE_LABEL + idx);
+						setValue(itn, String.valueOf(brand.getPrice()));
+
+						itn = new String(QUANTITY_LABEL + idx);
+						setValue(itn, String.valueOf(item.getQuantity()));
+
+					}
+					
+					
+					/**
+					 * This method reads the data from the hash table and creates a DrinkStoreItem.
+					 * @param index the index of the store item.
+					 * @return StoreItem the store item of the given index.
+					 */
+					@Override
+					public StoreItem getItem(int index) {
+						int idx = index + 1;
+						DrinksBrand brand = new DrinksBrand();
+
+						String name = new String(NAME_LABEL + idx);
+						String value = getValue(name);
+						brand.setName(value);
+
+						name = new String(PRICE_LABEL + idx);
+						value = getValue(name);
+						brand.setPrice(Integer.parseInt(value));
+
+						name = new String(QUANTITY_LABEL + idx);
+						value = getValue(name);
+						int qty = Integer.parseInt(value);
+
+						DrinksStoreItem item = new DrinksStoreItem(brand, qty);
+						return item;
+
+					}
+				});
+				break;
+				
+			case DB_LOADER:
+				setPropertyLoaderImpl(new DBPropertyLoaderImpl());
+				break;
+		}
 	}
 
-	/**
-	 * This method reads the data from the hash table and creates a DrinkStoreItem.
-	 * @param index the index of the store item.
-	 * @return StoreItem the store item of the given index.
-	 */
+	@Override
+	public void initialize() throws IOException {
+		getPropertyLoaderImpl().initialize();
+	}
+
+	@Override
+	public void saveProperty() throws IOException {
+		getPropertyLoaderImpl().saveProperty();
+	}
+
+	@Override
+	public int getNumOfItems() {
+		return getPropertyLoaderImpl().getNumOfItems();
+	}
+
+	@Override
+	public void setNumOfItems(int numItems) {
+		 getPropertyLoaderImpl().setNumOfItems(numItems);
+	}
+
+	@Override
 	public StoreItem getItem(int index) {
-		int idx = index + 1;
-		DrinksBrand brand = new DrinksBrand();
-
-		String name = new String(NAME_LABEL + idx);
-		String value = getValue(name);
-		brand.setName(value);
-
-		name = new String(PRICE_LABEL + idx);
-		value = getValue(name);
-		brand.setPrice(Integer.parseInt(value));
-
-		name = new String(QUANTITY_LABEL + idx);
-		value = getValue(name);
-		int qty = Integer.parseInt(value);
-
-		DrinksStoreItem item = new DrinksStoreItem(brand, qty);
-		return item;
-
+		return getPropertyLoaderImpl().getItem(index);
 	}
 
-	/**
-	 * This method updates the hash table with the data from the DrinkStoreItem.
-	 * @param index the index of the store item.
-	 * @param drinksItem the store item of the given index.
-	 */
-	public void setItem(int index, StoreItem drinksItem) {
-		int idx = index + 1;
-
-		DrinksStoreItem item = (DrinksStoreItem) drinksItem;
-		DrinksBrand brand = (DrinksBrand) item.getContent();
-		String itn = new String(NAME_LABEL + idx);
-		setValue(itn, brand.getName());
-
-		itn = new String(PRICE_LABEL + idx);
-		setValue(itn, String.valueOf(brand.getPrice()));
-
-		itn = new String(QUANTITY_LABEL + idx);
-		setValue(itn, String.valueOf(item.getQuantity()));
-
+	@Override
+	public void setItem(int index, StoreItem item) {
+		getPropertyLoaderImpl().setItem(index, item);
 	}
+
+	
+
+	
 }//End of class DrinkPropertyLoader

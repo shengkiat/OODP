@@ -1,41 +1,8 @@
-/*
- * Copyright 2003 ISS.
- * The contents contained in this document may not be reproduced in any
- * form or by any means, without the written permission of ISS, other
- * than for the purpose for which it has been supplied.
- *
- */
 package sg.edu.nus.iss.vmcs.store;
 
-import java.io.*;
+import java.io.IOException;
 
-/**
- * This interface provides the generic functionality required to initialize the stores.
- * 
- * @see CashStore
- * @see CashStoreItem
- * @see Coin
- * @see DrinksBrand
- * @see DrinksStore
- * @see DrinksStoreItem
- * @see Store
- * @see StoreController
- * @see StoreItem
- * @see StoreObject
- * 
- * @version 3.0 5/07/2003
- * @author Olivo Miotto, Pang Ping Li
- */
-public abstract class PropertyLoader {
-	
-	//The Bridge to the Implementation hierarchy
-	private PropertyLoaderImpl propertyLoaderImpl = null;
-	
-	protected PropertyLoaderImpl getPropertyLoaderImpl() {return propertyLoaderImpl;}
-	
-	protected void setPropertyLoaderImpl(PropertyLoaderImpl propertyLoaderImpl){
-		this.propertyLoaderImpl = propertyLoaderImpl;
-	}
+public abstract class PropertyLoaderImpl {
 	
 	/**
 	 * This method reads the properties file into a hash table.
@@ -76,4 +43,4 @@ public abstract class PropertyLoader {
 	 * @param item the item to be saved.
 	 */
 	public abstract void setItem (int index, StoreItem item);
-}//End of interface PropertyLoader
+}

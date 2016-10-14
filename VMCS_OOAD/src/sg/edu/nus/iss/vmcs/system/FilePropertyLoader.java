@@ -28,7 +28,7 @@ import sg.edu.nus.iss.vmcs.store.*;
  * @author Olivo Miotto, Pang Ping Li
  */
 
-public abstract class FilePropertyLoader implements PropertyLoader {
+public abstract class FilePropertyLoader {
 	private static final String PROP_NUM_ITEMS = "NumOfItems";
 
 	private Properties prop;

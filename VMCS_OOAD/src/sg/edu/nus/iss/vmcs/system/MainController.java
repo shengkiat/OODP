@@ -14,6 +14,7 @@ import sg.edu.nus.iss.vmcs.machinery.MachineryController;
 import sg.edu.nus.iss.vmcs.maintenance.MaintenanceController;
 import sg.edu.nus.iss.vmcs.store.CashStoreController;
 import sg.edu.nus.iss.vmcs.store.DrinkStoreController;
+import sg.edu.nus.iss.vmcs.store.LoaderType;
 import sg.edu.nus.iss.vmcs.store.StoreController;
 import sg.edu.nus.iss.vmcs.util.VMCSException;
 
@@ -68,6 +69,8 @@ public class MainController {
 				new CashPropertyLoader(Environment.getCashPropFile());
 			DrinkPropertyLoader drinksLoader =
 				new DrinkPropertyLoader(Environment.getDrinkPropFile());
+			cashLoader.setLoaderType(LoaderType.FILE_LOADER);
+			drinksLoader.setLoaderType(LoaderType.FILE_LOADER);
 			cashLoader.initialize();
 			drinksLoader.initialize();
 		//	storeCtrl = new StoreController(cashLoader, drinksLoader);
