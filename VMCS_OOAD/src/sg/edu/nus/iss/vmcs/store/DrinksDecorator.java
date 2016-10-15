@@ -1,5 +1,11 @@
 package sg.edu.nus.iss.vmcs.store;
 
+/**
+ * New class for decorator pattern
+ * 
+ * @author benjaminng
+ *
+ */
 public abstract class DrinksDecorator implements DrinksProduct {
 	
 	private DrinksProduct drinksProduct;
