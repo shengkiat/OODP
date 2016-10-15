@@ -39,7 +39,7 @@ public class CurrencyTwentyCentsChangeGiverHandler implements ChangeGiverHandler
 			int num = change / 20;
 			int remainder = change % 20;
 			System.out.println("Change given ---> " + num + " 20 cents");
-			txCtrl.getMainController().getMachineryController().giveChange(3,num);
+			txCtrl.getMainController().getMachineryController().giveChange(2,num);
 			txCtrl.getCustomerPanel().setChange(remainder);
 			if(remainder !=0) {
 				this.nextChainHandler.giveChange(remainder, txCtrl);
@@ -47,5 +47,19 @@ public class CurrencyTwentyCentsChangeGiverHandler implements ChangeGiverHandler
 		} else {
 			this.nextChainHandler.giveChange(change, txCtrl);
 		}
+	}
+
+	/**
+	 * @return the nextChainHandler
+	 */
+	public ChangeGiverHandler getNextChainHandler() {
+		return nextChainHandler;
+	}
+
+	/**
+	 * @param nextChainHandler the nextChainHandler to set
+	 */
+	public void setNextChainHandler(ChangeGiverHandler nextChainHandler) {
+		this.nextChainHandler = nextChainHandler;
 	}
 }

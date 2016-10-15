@@ -35,17 +35,35 @@ public class CurrencyFiveCentsChangeGiverHandler implements ChangeGiverHandler {
 	 */
 	@Override
 	public void giveChange(int change, TransactionController txCtrl) throws VMCSException {
+		int remainder = 0;
 		if(change >= 5) {
 			int num = change / 5;
-			int remainder = change % 5;
+			remainder = change % 5;
 			System.out.println("Change given ---> " + num + " 5 cents");
-			txCtrl.getMainController().getMachineryController().giveChange(1,num);
+			txCtrl.getMainController().getMachineryController().giveChange(0,num);
 			txCtrl.getCustomerPanel().setChange(remainder);
-			if(remainder !=0) {
+			if(remainder !=0 && this.nextChainHandler != null) {
 				this.nextChainHandler.giveChange(remainder, txCtrl);
+			} else {
+				System.out.println("remainder ---> " + remainder);
+				txCtrl.getCustomerPanel().setChange(remainder);
 			}
 		} else {
-			this.nextChainHandler.giveChange(change, txCtrl);
+			txCtrl.getCustomerPanel().setChange(remainder);
 		}
+	}
+
+	/**
+	 * @return the nextChainHandler
+	 */
+	public ChangeGiverHandler getNextChainHandler() {
+		return nextChainHandler;
+	}
+
+	/**
+	 * @param nextChainHandler the nextChainHandler to set
+	 */
+	public void setNextChainHandler(ChangeGiverHandler nextChainHandler) {
+		this.nextChainHandler = nextChainHandler;
 	}
 }
