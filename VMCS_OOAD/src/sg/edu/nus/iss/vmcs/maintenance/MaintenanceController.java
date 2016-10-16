@@ -8,16 +8,19 @@
 package sg.edu.nus.iss.vmcs.maintenance;
 
 import java.awt.Frame;
+import java.util.Observable;
+import java.util.Observer;
 
 import sg.edu.nus.iss.vmcs.customer.CustomerPanel;
 import sg.edu.nus.iss.vmcs.machinery.MachineryController;
 import sg.edu.nus.iss.vmcs.store.CashStoreController;
 import sg.edu.nus.iss.vmcs.store.CashStoreItem;
+import sg.edu.nus.iss.vmcs.store.Coin;
 import sg.edu.nus.iss.vmcs.store.DrinkStoreController;
 import sg.edu.nus.iss.vmcs.store.DrinksBrand;
 import sg.edu.nus.iss.vmcs.store.DrinksStoreItem;
 import sg.edu.nus.iss.vmcs.store.Store;
-import sg.edu.nus.iss.vmcs.store.StoreController;
+import sg.edu.nus.iss.vmcs.store.StoreItem;
 import sg.edu.nus.iss.vmcs.system.MainController;
 import sg.edu.nus.iss.vmcs.system.SimulatorControlPanel;
 import sg.edu.nus.iss.vmcs.util.MessageDialog;
@@ -29,7 +32,7 @@ import sg.edu.nus.iss.vmcs.util.VMCSException;
  * @version 3.0 5/07/2003
  * @author Olivo Miotto, Pang Ping Li
  */
-public class MaintenanceController {
+public class MaintenanceController implements Observer{
 	private MainController mCtrl;
 	private MaintenancePanel mpanel;
 	private AccessManager am;
@@ -41,6 +44,17 @@ public class MaintenanceController {
 	public MaintenanceController(MainController mctrl) {
 		mCtrl = mctrl;
 		am = new AccessManager(this);
+		StoreItem[] storeItem = mCtrl.getCashStoreController().getStoreItems();
+		for(StoreItem item : storeItem)
+		{
+			item.addObserver(this);
+		}
+		
+		StoreItem[] drinkStoreItem = mCtrl.getDrinkStoreController().getStoreItems();
+		for(StoreItem item : drinkStoreItem)
+		{
+			item.addObserver(this);
+		}
 	}
 
 	/**
@@ -196,14 +210,40 @@ public class MaintenanceController {
 	 * @param idx the index of the StoreItem.
 	 * @param qty the quantity of the StoreItem.
 	 */
-	public void changeStoreQty(char type, int idx, int qty) {
+	public void changeStoreQty(int type, int idx, int qty) {
 		//StoreController sctrl = mCtrl.getStoreController();
 		try {
-			mpanel.updateQtyDisplay(type, idx, qty);
-			mpanel.initCollectCash();
-			mpanel.initTotalCash();
+			if (mpanel != null) {
+				mpanel.updateQtyDisplay(type, idx, qty);
+				mpanel.initCollectCash();
+				mpanel.initTotalCash();
+			}
 		} catch (VMCSException e) {
 			System.out.println("MaintenanceController.changeStoreQty:" + e);
+		}
+	}
+	public void update(Observable storeItem, Object obj){
+		if(storeItem instanceof CashStoreItem) {
+			System.out.println("MaintenanceController.update : CashMaintenancePanel");
+			Store cashstore = mCtrl.getCashStoreController().getStore();
+			Coin updated = (Coin)((CashStoreItem) storeItem).getContent();
+			for (int i = 0; i < cashstore.getStoreSize(); i++) {
+				StoreItem item = (CashStoreItem) cashstore.getStoreItem(i);
+				Coin current = (Coin) item.getContent();
+				if (current.getWeight() == updated.getWeight())
+					changeStoreQty(Store.CASH,i,((CashStoreItem) storeItem).getQuantity());
+			}
+		}
+		else if(storeItem instanceof DrinksStoreItem) {
+			System.out.println("MaintenanceController.update : DrinksMaintenancePanel");
+			Store drinksstore = mCtrl.getDrinkStoreController().getStore();
+			DrinksBrand updated = (DrinksBrand)((DrinksStoreItem) storeItem).getContent();
+			for (int i = 0; i < drinksstore.getStoreSize(); i++) {
+				StoreItem item = (DrinksStoreItem) drinksstore.getStoreItem(i);
+				DrinksBrand current = (DrinksBrand) item.getContent();
+				if (current.getType() == updated.getType())
+					changeStoreQty(Store.DRINK,i,((DrinksStoreItem) storeItem).getQuantity());
+			}
 		}
 	}
 

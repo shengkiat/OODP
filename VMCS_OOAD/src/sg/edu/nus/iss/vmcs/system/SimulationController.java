@@ -10,7 +10,6 @@ package sg.edu.nus.iss.vmcs.system;
 import sg.edu.nus.iss.vmcs.customer.TransactionController;
 import sg.edu.nus.iss.vmcs.machinery.MachineryController;
 import sg.edu.nus.iss.vmcs.maintenance.MaintenanceController;
-import sg.edu.nus.iss.vmcs.util.VMCSException;
 
 /**
  * This control object represents the operating system user interface at which the VMCS
@@ -106,21 +105,18 @@ public class SimulationController {
 
 		machCtrl = mCtrl.getMachineryController();
 		scp.setActive(SimulatorControlPanel.ACT_MACHINERY, false);
-		try {
-			// activate when not login
-			// always diaply the door locked; isOpen false
-			machCtrl.displayMachineryPanel();
+		
+		// activate when not login
+		// always diaply the door locked; isOpen false
+		machCtrl.displayMachineryPanel();
 
-			// display drink stock;
-			machCtrl.displayDrinkStock();
+		// display drink stock;
+		machCtrl.displayDrinkStock();
 
-			// display coin quantity;
-			machCtrl.displayCoinStock();
+		// display coin quantity;
+		machCtrl.displayCoinStock();
 
-			machCtrl.displayDoorState();
-		} catch (VMCSException e) {
-			System.out.println("SimulationController.setupSimulator:" + e);
-		}
+		machCtrl.displayDoorState();
 	}
 
 	/**

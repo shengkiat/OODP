@@ -9,6 +9,10 @@ package sg.edu.nus.iss.vmcs.machinery;
 
 import sg.edu.nus.iss.vmcs.system.*;
 import sg.edu.nus.iss.vmcs.util.*;
+
+import java.util.Observable;
+import java.util.Observer;
+
 import sg.edu.nus.iss.vmcs.store.*;
 
 /**
@@ -17,7 +21,7 @@ import sg.edu.nus.iss.vmcs.store.*;
  * @version 3.0 5/07/2003
  * @author Olivo Miotto, Pang Ping Li
  */
-public class MachineryController {
+public class MachineryController implements Observer{
 	/**This attribute reference to the MainController*/
 	public MainController mainCtrl;
 
@@ -30,6 +34,19 @@ public class MachineryController {
 	 */
 	public MachineryController(MainController mctrl) {
 		mainCtrl = mctrl;
+
+		StoreItem[] storeItem = mainCtrl.getCashStoreController().getStoreItems();
+		for(StoreItem item : storeItem)
+		{
+			item.addObserver(this);
+		}
+		
+		StoreItem[] drinkStoreItem = mainCtrl.getDrinkStoreController().getStoreItems();
+		for(StoreItem item : drinkStoreItem)
+		{
+			item.addObserver(this);
+		}
+
 	}
 
 	/**
@@ -132,7 +149,7 @@ public class MachineryController {
 	 * and display them on the Machinery SimulatorPanel.
 	 * @throws VMCSException if fail to update drinks store display.
 	 */
-	public void displayDrinkStock() throws VMCSException {
+	public void displayDrinkStock() {
 		if (ml == null)
 			return;
 		ml.getDrinksStoreDisplay().update();
@@ -144,7 +161,7 @@ public class MachineryController {
 	 * display them on the MachinerySimulatorPanel.
 	 * @throws VMCSException if fail to update cash store display.
 	 */
-	public void displayCoinStock() throws VMCSException {
+	public void displayCoinStock() {
 		if (ml == null)
 			return;
 		ml.getCashStoreDisplay().update();
@@ -161,8 +178,8 @@ public class MachineryController {
 	 */
 	public void storeCoin(Coin c) throws VMCSException {
 		mainCtrl.getCashStoreController().storeCoin(c);
-		if (ml != null)
-			ml.getCashStoreDisplay().update();
+		/*if (ml != null)
+			ml.getCashStoreDisplay().update();*/
 	}
 
 	/**
@@ -174,8 +191,8 @@ public class MachineryController {
 	 */
 	public void dispenseDrink(int idx) throws VMCSException {
 		mainCtrl.getDrinkStoreController().dispenseDrink(idx);
-		if (ml != null)
-			ml.getCashStoreDisplay().update();
+		/*if (ml != null)
+			ml.getCashStoreDisplay().update();*/
 
 	}
 
@@ -189,8 +206,8 @@ public class MachineryController {
 	 */
 	public void giveChange(int idx, int numOfCoins) throws VMCSException {
 		mainCtrl.getCashStoreController().giveChange(idx, numOfCoins);
-		if (ml != null)
-			ml.getCashStoreDisplay().update();
+		/*if (ml != null)
+			ml.getCashStoreDisplay().update();*/
 	}
 	
 	/**
@@ -199,6 +216,17 @@ public class MachineryController {
 	public void refreshMachineryDisplay(){
 		if(ml!=null){
 			ml.refresh();
+		}
+	}
+	
+	public void update(Observable storeItem, Object obj){
+		if(storeItem instanceof CashStoreItem) {
+			System.out.println("MachinaryController.update : displayCoinStock");
+			displayCoinStock();
+		}
+		else if(storeItem instanceof DrinksStoreItem) {
+			System.out.println("MachinaryController.update : displayDrinkStock");
+			displayDrinkStock();
 		}
 	}
 }//End of class MachineryController
