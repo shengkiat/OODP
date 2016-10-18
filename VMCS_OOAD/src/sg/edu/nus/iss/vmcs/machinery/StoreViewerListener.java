@@ -47,6 +47,6 @@ public class StoreViewerListener implements ActionListener {
 		vf = (TextField) e.getSource();
 		sqty = vf.getText();
 		qty = Integer.parseInt(sqty);
-		storeCtrl.changeStoreQty(type, item, qty);
+		storeCtrl.changeStoreQty(item, qty);
 	}
 }//End of class StoreViewerListener

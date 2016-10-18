@@ -82,18 +82,13 @@ public abstract class StoreController {
 	 * <br>
 	 * - instruct the {@link DrinksStore} to update the drinks stock for a {@link DrinksBrand} required
 	 * to a new value supplied.
-	 * @param type the type of Store.
 	 * @param idx the index of the StoreItem.
 	 * @param qty the quantity of the StoreItem.
 	 */
-	public void changeStoreQty(int type, int idx, int qty) {
-			System.out.println("StoreController.changeStoreQty: type:"+ type+ " qty:"+ qty);
+	public void changeStoreQty(int idx, int qty) {
+			System.out.println("StoreController.changeStoreQty: qty:"+ qty);
 			
 			getStore().setQuantity(idx, qty);
-			/*if (type == Store.CASH)
-				cStore.setQuantity(idx, qty);
-			else
-				dStore.setQuantity(idx, qty);*/
 	}
 
 	/**
