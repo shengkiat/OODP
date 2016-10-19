@@ -36,7 +36,7 @@ public class DrinksStoreItemTest extends TestCase{
 	public void testSetGetContent() throws Exception{
 		MainController mainCtrl=new MainController(propertyFilename);
 		mainCtrl.initialize();
-		StoreController storeController=mainCtrl.getCashStoreController();
+		StoreController storeController=mainCtrl.getDrinkStoreController();
 		storeController.initialize();
 		DrinksStore drinkStore=(DrinksStore)storeController.getStore();
 		int storeSize=drinkStore.getStoreSize();
@@ -57,7 +57,7 @@ public class DrinksStoreItemTest extends TestCase{
 	public void testSetGetQuantity() throws Exception{
 		MainController mainCtrl=new MainController(propertyFilename);
 		mainCtrl.initialize();
-		StoreController storeController=mainCtrl.getCashStoreController();
+		StoreController storeController=mainCtrl.getDrinkStoreController();
 		storeController.initialize();
 		DrinksStore drinksStore=(DrinksStore)storeController.getStore();
 		int storeSize=drinksStore.getStoreSize();
@@ -79,7 +79,7 @@ public class DrinksStoreItemTest extends TestCase{
 	public void testStore() throws Exception{
 		MainController mainCtrl=new MainController(propertyFilename);
 		mainCtrl.initialize();
-		StoreController storeController=mainCtrl.getCashStoreController();
+		StoreController storeController=mainCtrl.getDrinkStoreController();
 		storeController.initialize();
 		DrinksStore drinksStore=(DrinksStore)storeController.getStore();
 		int storeSize=drinksStore.getStoreSize();
@@ -99,7 +99,7 @@ public class DrinksStoreItemTest extends TestCase{
 	public void testDecrement() throws Exception{
 		MainController mainCtrl=new MainController(propertyFilename);
 		mainCtrl.initialize();
-		StoreController storeController=mainCtrl.getCashStoreController();
+		StoreController storeController=mainCtrl.getDrinkStoreController();
 		storeController.initialize();
 		DrinksStore drinksStore=(DrinksStore)storeController.getStore();
 		int storeSize=drinksStore.getStoreSize();
@@ -122,7 +122,7 @@ public class DrinksStoreItemTest extends TestCase{
 	public void testIncrement() throws Exception{
 		MainController mainCtrl=new MainController(propertyFilename);
 		mainCtrl.initialize();
-		StoreController storeController=mainCtrl.getCashStoreController();
+		StoreController storeController=mainCtrl.getDrinkStoreController();
 		storeController.initialize();
 		DrinksStore drinksStore=(DrinksStore)storeController.getStore();
 		int storeSize=drinksStore.getStoreSize();

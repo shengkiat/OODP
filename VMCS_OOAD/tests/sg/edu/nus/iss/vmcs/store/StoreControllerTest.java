@@ -30,6 +30,10 @@ public class StoreControllerTest extends TestCase{
 			new CashPropertyLoader(Environment.getCashPropFile());
 		DrinkPropertyLoader drinksLoader =
 			new DrinkPropertyLoader(Environment.getDrinkPropFile());
+		
+		cashLoader.setLoaderType(LoaderType.FILE_LOADER);
+		drinksLoader.setLoaderType(LoaderType.FILE_LOADER);
+		
 		cashLoader.initialize();
 		drinksLoader.initialize();
 		//Act
