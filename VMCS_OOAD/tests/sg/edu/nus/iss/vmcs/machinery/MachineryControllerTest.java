@@ -1,14 +1,12 @@
 package sg.edu.nus.iss.vmcs.machinery;
 
-import java.util.Observable;
-import java.util.concurrent.atomic.AtomicBoolean;
+import java.awt.Frame;
 
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
 import junit.framework.TestCase;
-import sg.edu.nus.iss.vmcs.store.CashStoreItem;
 import sg.edu.nus.iss.vmcs.store.Store;
 import sg.edu.nus.iss.vmcs.store.StoreController;
 import sg.edu.nus.iss.vmcs.store.StoreItem;
@@ -21,29 +19,40 @@ public class MachineryControllerTest extends TestCase {
 	private MainController mainController;
 	
 	private static final String TEST_PROPERTY_FILE_NAME = "Vmcs.properties";
-	private boolean updateCalled = false;
+	private boolean displayCoinStockCalled = false;
+	private boolean displayDrinksStockCalled = false;
 	
-	class TestMachineryController extends MachineryController
+	class MachinerySimulatorPanelSpy extends MachinerySimulatorPanel
 	{
-		public TestMachineryController(MainController mctrl) {
-			super(mctrl);
+
+		public MachinerySimulatorPanelSpy(Frame fr, MachineryController machCtrl) {
+			super(fr, machCtrl);
 			// TODO Auto-generated constructor stub
 		}
 
+		private static final long serialVersionUID = 1L;
+		
 		@Override
-		public void update(Observable storeItem, Object obj)
-		{
-			updateCalled = true;
-			assertTrue(storeItem instanceof CashStoreItem);
+		public StoreViewer getCashStoreDisplay() {
+			displayCoinStockCalled = true;
+			return super.getCashStoreDisplay();
 		}
+		
+		@Override
+		public StoreViewer getDrinksStoreDisplay() {
+			displayDrinksStockCalled = true;
+			return super.getDrinksStoreDisplay();
+		}
+
 	}
-	
+
 	@Before
 	public void setUp() throws Exception {
 		Environment.initialize(TEST_PROPERTY_FILE_NAME);
 		mainController = new MainController(TEST_PROPERTY_FILE_NAME);
 		mainController.initialize();
-		sut = new TestMachineryController(mainController);
+		sut = mainController.getMachineryController();
+		sut.SetMachinerySimulatorPanel(new MachinerySimulatorPanelSpy(mainController.getSimulatorControlPanel(), sut));
 	}
 
 	/**
@@ -60,25 +69,21 @@ public class MachineryControllerTest extends TestCase {
 		System.out.println("testUpdateWhenCoinQuantityIncrement");
 		
 		StoreController cashStoreController=mainController.getCashStoreController();
-		
-		cashStoreController.initialize();
 		Store store=cashStoreController.getStore();
 		StoreItem storeItem=(StoreItem)store.getStoreItem(2);
 		storeItem.increment();
-		// verify machinerycontroller update is called
-		Thread.sleep(5000);
-		assertTrue(updateCalled);
+
+		assertTrue(displayCoinStockCalled);
 	}
 	
 	@Test
 	public void testUpdateWhenDrinksQuantityIncrement() throws Exception {
 		System.out.println("testUpdateWhenDrinksQuantityIncrement");
 		StoreController drinksStoreController=mainController.getDrinkStoreController();
-		
-		drinksStoreController.initialize();
 		Store store = drinksStoreController.getStore();
 		StoreItem storeItem=(StoreItem)store.getStoreItem(2);
 		storeItem.increment();
-		// verify machinerycontroller update is called
+		
+		assertTrue(displayDrinksStockCalled);
 	}
 }

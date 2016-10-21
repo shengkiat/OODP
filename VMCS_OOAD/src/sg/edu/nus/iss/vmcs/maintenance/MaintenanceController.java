@@ -222,6 +222,12 @@ public class MaintenanceController implements Observer{
 			System.out.println("MaintenanceController.changeStoreQty:" + e);
 		}
 	}
+	
+	/**
+	 * This method is called whenever the observed object is changed.
+	 * @param storeItem the observable storeItem object.
+	 * @param obj the argument passed to the notifyObservers method.
+	 */
 	public void update(Observable storeItem, Object obj){
 		if(storeItem instanceof CashStoreItem) {
 			System.out.println("MaintenanceController.update : CashMaintenancePanel");
@@ -293,5 +299,13 @@ public class MaintenanceController implements Observer{
 	public void closeDown() {
 		if (mpanel != null)
 			mpanel.closeDown();
+	}
+	
+	/**
+	 * This method sets the MaintenancePanel.
+	 * @param mc the MaintenancePanel.
+	 */
+	public void SetMaintenancePanel(MaintenancePanel mc) {
+		mpanel = mc;
 	}
 }//End of class MaintenanceController

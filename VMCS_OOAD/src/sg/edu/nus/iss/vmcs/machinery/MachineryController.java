@@ -219,6 +219,11 @@ public class MachineryController implements Observer{
 		}
 	}
 	
+	/**
+	 * This method is called whenever the observed object is changed.
+	 * @param storeItem the observable storeItem object.
+	 * @param obj the argument passed to the notifyObservers method.
+	 */
 	public void update(Observable storeItem, Object obj){
 		if(storeItem instanceof CashStoreItem) {
 			System.out.println("MachinaryController.update : displayCoinStock");
@@ -228,5 +233,13 @@ public class MachineryController implements Observer{
 			System.out.println("MachinaryController.update : displayDrinkStock");
 			displayDrinkStock();
 		}
+	}
+	
+	/**
+	 * This method sets the MachinerySimulatorPanel.
+	 * @param msp the MachinerySimulatorPanel.
+	 */
+	public void SetMachinerySimulatorPanel(MachinerySimulatorPanel msp) {
+		ml = msp;
 	}
 }//End of class MachineryController
