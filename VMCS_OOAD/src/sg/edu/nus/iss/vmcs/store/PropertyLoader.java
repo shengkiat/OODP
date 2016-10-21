@@ -28,12 +28,33 @@ import java.io.*;
  */
 public abstract class PropertyLoader {
 	
-	//The Bridge to the Implementation hierarchy
+	private String environmentStr = null;
 	private PropertyLoaderImpl propertyLoaderImpl = null;
 	
-	protected PropertyLoaderImpl getPropertyLoaderImpl() {return propertyLoaderImpl;}
+	public PropertyLoader(String environmentStr) {
+		
+		this.environmentStr = environmentStr;
+	}
 	
-	protected void setPropertyLoaderImpl(PropertyLoaderImpl propertyLoaderImpl){
+	public void setLoaderType(LoaderType loaderType) throws IOException {
+		
+		switch (loaderType){
+		
+			case FILE_LOADER:
+				setPropertyLoaderImpl(new FilePropertyLoaderImpl(environmentStr));
+				break;
+				
+			case DB_LOADER:
+				setPropertyLoaderImpl(new DBPropertyLoaderImpl(environmentStr));
+				break;
+		}
+	}
+	
+	//The Bridge to the Implementation hierarchy
+	
+//	public PropertyLoaderImpl getPropertyLoaderImpl();
+	
+	private void setPropertyLoaderImpl(PropertyLoaderImpl propertyLoaderImpl){
 		this.propertyLoaderImpl = propertyLoaderImpl;
 	}
 	
@@ -41,27 +62,33 @@ public abstract class PropertyLoader {
 	 * This method reads the properties file into a hash table.
 	 * @throws IOException if fail to read properties from properties file.
 	 */
-	public abstract void initialize() throws IOException;
+//	public abstract void initialize() throws IOException;
 	
 	/**
 	 * This method writes the properties from the hash table to the file.
 	 * @throws IOException if fail to save properties to properties file.
 	 */
-	public abstract void saveProperty() throws IOException; 
+	public void saveProperty() throws IOException{
+		this.propertyLoaderImpl.saveProperty();
+	}
 
 	/**
 	 * This method returns the number of items (either CashStoreItem or DrinkStoreItem)
 	 * stored in the hash table.
 	 * @return the number of items.
 	 */
-	public abstract int getNumOfItems();
+	public int getNumOfItems(){
+		return this.propertyLoaderImpl.getNumOfItems();
+	}
 
 	/**
 	 * This method sets the number of items (either CashStoreItem or DrinkStoreItem)
 	 * stored in the hash table.
 	 * @param numItems the number of items.
 	 */
-	public abstract void setNumOfItems(int numItems);
+	public void setNumOfItems(int numItems){
+		this.propertyLoaderImpl.setNumOfItems(numItems);;
+	}
 
 	/**
 	 * This method reads the data from the hash table and creates a StoreItem.
@@ -76,4 +103,13 @@ public abstract class PropertyLoader {
 	 * @param item the item to be saved.
 	 */
 	public abstract void setItem (int index, StoreItem item);
+	
+	
+	public String getValue(String key){
+		return propertyLoaderImpl.getValue(key);
+	}
+
+	public void setValue(String key, String value){
+		propertyLoaderImpl.setValue(key, value);
+	}
 }//End of interface PropertyLoader
