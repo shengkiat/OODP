@@ -24,8 +24,8 @@ public abstract class DrinksDecorator implements DrinksProduct {
 	}
 	
 	@Override
-	public String getType() {
-		return drinksProduct.getType();
+	public String getName() {
+		return drinksProduct.getName();
 	}
 
 }

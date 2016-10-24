@@ -59,8 +59,4 @@ public class DrinksBrand extends StoreObject implements DrinksProduct {
 		return (price);
 	}
 
-	@Override
-	public String getType() {
-		return name;
-	}
 }//End of class DrinksBrand

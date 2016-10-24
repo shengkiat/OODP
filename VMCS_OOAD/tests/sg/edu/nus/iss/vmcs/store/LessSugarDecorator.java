@@ -7,8 +7,8 @@ public class LessSugarDecorator extends DrinksDecorator {
 	}
 
 	@Override
-	public String getType() {
-		return super.getType() + " " + "Less Sugar";
+	public String getName() {
+		return super.getName() + " " + "Less Sugar";
 	}
 	
 	@Override

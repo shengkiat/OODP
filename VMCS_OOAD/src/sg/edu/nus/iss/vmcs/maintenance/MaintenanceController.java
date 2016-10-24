@@ -249,7 +249,7 @@ public class MaintenanceController implements Observer{
 			for (int i = 0; i < drinksstore.getStoreSize(); i++) {
 				StoreItem item = (DrinksStoreItem) drinksstore.getStoreItem(i);
 				DrinksBrand current = (DrinksBrand) item.getContent();
-				if (current.getType() == updated.getType())
+				if (current.getName() == updated.getName())
 					changeStoreQty(Store.DRINK,i,((DrinksStoreItem) storeItem).getQuantity());
 			}
 		}
