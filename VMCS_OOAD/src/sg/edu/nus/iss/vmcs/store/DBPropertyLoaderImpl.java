@@ -2,14 +2,24 @@ package sg.edu.nus.iss.vmcs.store;
 
 import java.io.IOException;
 
-public class DBPropertyLoaderImpl extends PropertyLoaderImpl {
-
-	@Override
-	public void initialize() throws IOException {
-		// TODO Auto-generated method stub
-
+public class DBPropertyLoaderImpl implements PropertyLoaderImpl {
+	
+	private String jdbcUrl = null;
+	
+	
+	public DBPropertyLoaderImpl(String jdbcUrl){
+		this.jdbcUrl = jdbcUrl;
 	}
-
+	
+	
+	/**
+	 * Initialize the DB connection
+	 * @throws IOException
+	 */
+	private void initialize() throws IOException {
+		
+	}
+	
 	@Override
 	public void saveProperty() throws IOException {
 		// TODO Auto-generated method stub
@@ -29,15 +39,15 @@ public class DBPropertyLoaderImpl extends PropertyLoaderImpl {
 	}
 
 	@Override
-	public StoreItem getItem(int index) {
+	public String getValue(String key) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public void setItem(int index, StoreItem item) {
+	public void setValue(String key, String value) {
 		// TODO Auto-generated method stub
-
+		
 	}
 
 }

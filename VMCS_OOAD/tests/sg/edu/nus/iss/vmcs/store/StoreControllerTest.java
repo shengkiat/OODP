@@ -33,9 +33,7 @@ public class StoreControllerTest extends TestCase{
 		
 		cashLoader.setLoaderType(LoaderType.FILE_LOADER);
 		drinksLoader.setLoaderType(LoaderType.FILE_LOADER);
-		
-		cashLoader.initialize();
-		drinksLoader.initialize();
+
 		//Act
 		StoreController cashStoreController=new CashStoreController(cashLoader);
 		cashStoreController.initialize();

@@ -5,7 +5,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.Properties;
 
-public abstract class FilePropertyLoaderImpl extends PropertyLoaderImpl {
+public class FilePropertyLoaderImpl implements PropertyLoaderImpl {
 
 	private static final String PROP_NUM_ITEMS = "NumOfItems";
 
@@ -15,17 +15,18 @@ public abstract class FilePropertyLoaderImpl extends PropertyLoaderImpl {
 	/**
 	 * This constructor creates an instance of the FilePropertyLoaderImpl object.
 	 * @param fileName the filename of the property file.
+	 * @throws IOException 
 	 */
-	public FilePropertyLoaderImpl(String fileName) {
+	public FilePropertyLoaderImpl(String fileName) throws IOException {
 		this.fileName = fileName;
+		initialize();
 	}
 	
 	/**
 	 * This method reads the properties file into a hash table.
 	 * @throws IOException if fail to load properties from properties file.
 	 */
-	@Override
-	public void initialize() throws IOException {
+	private void initialize() throws IOException {
 		prop = new Properties(System.getProperties());
 		FileInputStream stream = new FileInputStream(fileName);
 		prop.load(stream);
@@ -70,20 +71,21 @@ public abstract class FilePropertyLoaderImpl extends PropertyLoaderImpl {
 	 * @param index the index of the StoreItem.
 	 * @return the store item of the given index.
 	 */
-	public abstract StoreItem getItem(int index);
+//	public abstract StoreItem getItem(int index);
 
 	/**
 	 * This method updates the hash table with data from the StoreItem.
 	 * @param index the index of the StoreItem.
 	 * @param item the StoreItem.
 	 */
-	public abstract void setItem(int index, StoreItem item);
+//	public abstract void setItem(int index, StoreItem item);
  
 	/**
 	 * This method retrieve the value from the hash table.
 	 * @param key the key.
 	 * @return the value of the given key.
 	 */
+	@Override
 	public String getValue(String key) {
 		return prop.getProperty(key);
 	}
@@ -93,6 +95,7 @@ public abstract class FilePropertyLoaderImpl extends PropertyLoaderImpl {
 	 * @param key the key.
 	 * @param value the value.
 	 */
+	@Override
 	public void setValue(String key, String value) {
 		prop.setProperty(key, value);
 	}

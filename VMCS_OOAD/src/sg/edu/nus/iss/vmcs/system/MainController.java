@@ -65,14 +65,17 @@ public class MainController {
 	public void initialize() throws VMCSException {
 		try {
 			Environment.initialize(propertyFile);
+			
+			//Create ProertyLoader
 			CashPropertyLoader cashLoader =
 				new CashPropertyLoader(Environment.getCashPropFile());
 			DrinkPropertyLoader drinksLoader =
 				new DrinkPropertyLoader(Environment.getDrinkPropFile());
+			
+			//Set the LoaderType to determine the implementation type
 			cashLoader.setLoaderType(LoaderType.FILE_LOADER);
 			drinksLoader.setLoaderType(LoaderType.FILE_LOADER);
-			cashLoader.initialize();
-			drinksLoader.initialize();
+
 		//	storeCtrl = new StoreController(cashLoader, drinksLoader);
 			cashStoreCtrl = new CashStoreController(cashLoader);
 			drinkStoreCtrl = new DrinkStoreController(drinksLoader);

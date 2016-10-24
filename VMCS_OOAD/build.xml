@@ -28,7 +28,7 @@
     <junit printsummary="yes" fork="yes">
       <jvmarg value="-DpropertyFilename=Vmcs.properties"/>  
       <formatter type="plain"/>
-      <test name="sg.edu.nus.iss.vmcs.store.AllTests"/>
+      <test name="sg.edu.nus.iss.vmcs.VmcsAllTests"/>
       <classpath>
         <pathelement location="classes"/>
         <pathelement location="jars/junit.jar"/>
