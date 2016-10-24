@@ -13,7 +13,10 @@ import sg.edu.nus.iss.vmcs.store.StoreItem;
 import sg.edu.nus.iss.vmcs.system.Environment;
 import sg.edu.nus.iss.vmcs.system.MainController;
 
-
+/**
+ * @author Smita
+ *
+ */
 public class MachineryControllerTest extends TestCase {
 	private MachineryController sut;
 	private MainController mainController;

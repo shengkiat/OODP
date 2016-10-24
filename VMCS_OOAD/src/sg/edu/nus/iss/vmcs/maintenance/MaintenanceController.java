@@ -31,6 +31,8 @@ import sg.edu.nus.iss.vmcs.util.VMCSException;
  *
  * @version 3.0 5/07/2003
  * @author Olivo Miotto, Pang Ping Li
+ * 
+ * @author Smita
  */
 public class MaintenanceController implements Observer{
 	private MainController mCtrl;

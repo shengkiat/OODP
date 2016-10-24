@@ -13,7 +13,10 @@ import sg.edu.nus.iss.vmcs.store.StoreItem;
 import sg.edu.nus.iss.vmcs.system.Environment;
 import sg.edu.nus.iss.vmcs.system.MainController;
 import sg.edu.nus.iss.vmcs.util.VMCSException;
-
+/**
+ * @author Smita
+ *
+ */
 public class MaintenanceControllerTest extends TestCase {
 	private MaintenanceController sut;
 	private MainController mainController;
@@ -21,7 +24,6 @@ public class MaintenanceControllerTest extends TestCase {
 	private static final String TEST_PROPERTY_FILE_NAME = "Vmcs.properties";
 	private boolean updateCashQtyDisplay = false;
 	private boolean updateDrinksQtyDisplay = false;
-	private int quantity;
 
 	class MaintenancePanelSpy extends MaintenancePanel
 	{
@@ -36,7 +38,6 @@ public class MaintenanceControllerTest extends TestCase {
 		public void updateQtyDisplay(int type, int idx, int qty) throws VMCSException
 		{
 			super.updateQtyDisplay(type, idx, qty);
-			quantity = qty;
 			if(type == Store.CASH)
 				updateCashQtyDisplay = true;
 			else if(type == Store.DRINK)

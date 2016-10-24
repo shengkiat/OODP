@@ -20,6 +20,8 @@ import sg.edu.nus.iss.vmcs.store.*;
  *
  * @version 3.0 5/07/2003
  * @author Olivo Miotto, Pang Ping Li
+ * 
+ * @author Smita
  */
 public class MachineryController implements Observer{
 	/**This attribute reference to the MainController*/

@@ -26,6 +26,8 @@ import java.util.Observable;
  * 
  * @version 3.0 5/07/2003
  * @author Olivo Miotto, Pang Ping Li
+ * 
+ * @author Smita
  */
 public class StoreItem extends Observable{
 	private StoreObject content;
